@@ -1,0 +1,15 @@
+version: "2"
+services:
+  pycv:
+    image: ibotdotout/python-opencv
+    volumes:
+        - .:/code
+    working_dir: /code
+    command: |
+      /bin/bash -c "ln /dev/null /dev/raw1394 &&
+      apt-get update &&
+      apt-get install -y tesseract-ocr libtesseract-dev libleptonica-dev libjpeg-dev &&
+      pip install -r requirements.txt &&
+      mkdir -p /usr/share/tesseract-ocr/tessdata &&
+      cp rus.traineddata /usr/share/tesseract-ocr/tessdata/ &&
+      python main.py"
