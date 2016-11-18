@@ -34,6 +34,7 @@ def searchImage(img):
     height, width = cropped.shape[:2]
     center = (width / 2, height / 2)
 
+    img_path = 'bin.tif'
 
     if (width > height):
         m = cv2.getRotationMatrix2D(center, 270, 1)
@@ -42,16 +43,18 @@ def searchImage(img):
         blur = cv2.GaussianBlur(gray, (3, 3), 5)
         thresh = cv2.adaptiveThreshold(blur, 255, 1, 1, 11, 2)
         img = cv2.bitwise_not(thresh)
-        cv2.imwrite('1.tif', img)
+        cv2.imwrite(img_path, img)
     else:
         rotated = cropped
         gray = cv2.cvtColor(rotated, cv2.COLOR_BGR2GRAY)
         blur = cv2.GaussianBlur(gray, (3, 3), 5)
         thresh = cv2.adaptiveThreshold(blur, 255, 1, 1, 11, 2)
         img = cv2.bitwise_not(thresh)
-        cv2.imwrite('1.tif', img)
+        cv2.imwrite(img_path, img)
+
+    return img_path
 
 
-def searchAmount():
-    total = image_to_string(Image.open('1.tif'), lang='rus')
+def searchAmount(img_path):
+    total = image_to_string(Image.open(img_path), lang='rus')
     return total
